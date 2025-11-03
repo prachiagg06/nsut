@@ -1,21 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import LandingPage from './components/LandingPage';
+import Homepage from './components/Homepage';
+import SymptomChecker from './components/SymptomChecker';
+import MentalHealth from './components/MentalHealth';
+import PhysicalHealth from './components/PhysicalHealth';
+import LoginSignup from './components/Loginsignup';
+import QRcode from './components/QRcode';
 
-function App() {
+const App = () => {
+  const [showLanding, setShowLanding] = useState(true);
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Homepage setCurrentPage={setCurrentPage} />;
+
+      case 'symptom-checker':
+        return <SymptomChecker setCurrentPage={setCurrentPage} />;
+
+      case 'mental-health':
+        return <MentalHealth setCurrentPage={setCurrentPage} />;
+
+      case 'physical-health':
+        return <PhysicalHealth setCurrentPage={setCurrentPage} />;
+
+      case 'login-signup':
+        return <LoginSignup setCurrentPage={setCurrentPage} />;
+
+      case 'medical-qr':
+        return <QRcode setCurrentPage={setCurrentPage} />;
+
+      default:
+        return <Homepage setCurrentPage={setCurrentPage} />;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-red-100">
-      <h1 className="text-4xl font-bold text-blue-600 mb-4">
-        Tailwind CSS is Working 🎉
-      </h1>
-      <button className="px-6 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all">
-        Test Button
-      </button>
+    <div>
+      {showLanding ? (
+        <LandingPage onComplete={() => setShowLanding(false)} />
+      ) : (
+        renderPage()
+      )}
     </div>
   );
-}
+};
 
 export default App;
-
-
